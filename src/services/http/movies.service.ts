@@ -91,7 +91,7 @@ export const getMovieById = async (movieId: string): Promise<MovieCard> => {
 
 export const getMovieCast = async (
   movieId: string,
-): Promise<MovieCastMember> => {
+): Promise<MovieCastMember[]> => {
   const res = await moviesInstance.get(`/movie/${movieId}/credits`, {
     params: {
       api_key: import.meta.env.VITE_MOVIES_API_TOKEN,

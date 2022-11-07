@@ -1,17 +1,12 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import {
-  getMovieCast,
-  MovieCastMember,
-} from '../services/http/movies.service';
+import { getMovieCast, MovieCastMember } from '../services/http/movies.service';
 import Card from './CastCard';
 
 type Props = { movieId: string };
 
 const CastCarousel: FC<Props> = ({ movieId }) => {
-  const { mutateAsync } = useMutation((id: string) =>
-    getMovieCast(id),
-  );
+  const { mutateAsync } = useMutation((id: string) => getMovieCast(id));
   const [results, setResults] = useState<MovieCastMember[]>([]);
 
   const fetchData = async () => {
