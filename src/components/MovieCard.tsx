@@ -34,7 +34,7 @@ const Card: FC<CardProps> = ({ movie }) => {
               navigate(`/details/${movie.id}`, {
                 replace: true,
               });
-              queryCache.clear();
+              window.location.reload();
           }}
             className="btn btn-accent"
           >
