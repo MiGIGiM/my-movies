@@ -12,6 +12,7 @@ export type MovieCard = {
   overview: string;
   vote_average: number;
   favorite?: boolean;
+  poster_path?: string;
 };
 
 type MoviesResponse = {

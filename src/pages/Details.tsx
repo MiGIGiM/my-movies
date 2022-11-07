@@ -33,10 +33,11 @@ const Details = () => {
       overview: res.overview,
       release_date: res.release_date,
       title: res.title,
+      poster_path: res.poster_path,
       vote_average: res.vote_average,
       poster: `${import.meta.env.VITE_MOVIES_POSTER_URL}${res.poster_path}`,
     });
-    setFavorite(localStorage.findInArray(res.id))
+    setFavorite(localStorage.findInArray(res.id.toString()))
   };
 
   useEffect(() => {

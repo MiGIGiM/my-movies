@@ -18,7 +18,7 @@ export default {
     if (this.get('favorites') === undefined) this.set('favorites', [value]);
 
     if (this.get('favorites') !== undefined) {
-      let favArray: any[] = JSON.parse(this.get('favorites'));
+      let favArray: any[] = JSON.parse(this.get('favorites') || '');
       const result = favArray.filter((item) => item.id === value.id);
 
       if (result.length > 0) {
@@ -33,7 +33,7 @@ export default {
     }
   },
   findInArray(valueId: string): boolean {
-    const arr: any[] = JSON.parse(this.get('favorites'));
+    const arr: any[] = JSON.parse(this.get('favorites') || '');
 
     const arrFiltered = arr.filter((element) => element.id === valueId)
 
