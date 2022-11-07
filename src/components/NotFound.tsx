@@ -1,13 +1,13 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 import React, { FC } from 'react';
 import { useLottie } from 'lottie-react';
-import loadingAnimation from '../assets/animations/loading.json';
+import ErrorAnimation from '../assets/animations/404.json';
 
 type Props = { className: string };
 
-const Loader: FC<Props> = ({ className }) => {
+const NotFound: FC<Props> = ({ className }) => {
   const options = {
-    animationData: loadingAnimation,
+    animationData: ErrorAnimation,
     loop: true,
     autoplay: true,
   };
@@ -17,4 +17,4 @@ const Loader: FC<Props> = ({ className }) => {
   return <main className={className}>{View}</main>;
 };
 
-export default Loader;
+export default NotFound;
