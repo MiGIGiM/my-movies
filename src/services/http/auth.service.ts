@@ -7,4 +7,5 @@ export interface LoginVM {
   password: string;
 }
 
-export const login = (data: LoginVM) => authInstance.post('', data);
+export const login = (data: LoginVM): Promise<{ token: string }> =>
+  authInstance.post('', data);

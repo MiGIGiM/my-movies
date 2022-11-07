@@ -28,14 +28,26 @@ export type MovieCastMember = {
   image: string;
 };
 
-export const getPopularMovies = () =>
+export type MovieCrewMember = {
+  id: string | number;
+  name: string;
+  image: string;
+};
+
+type MovieCredits = {
+  id: number | string;
+  cast: MovieCastMember[];
+  crew: MovieCrewMember[];
+};
+
+export const getPopularMovies = (): Promise<MoviesResponse> =>
   moviesInstance.get('/movie/popular', {
     params: {
       api_key: import.meta.env.VITE_MOVIES_API_TOKEN,
     },
   });
 
-export const getMoviesSearchResults = (query: string) =>
+export const getMoviesSearchResults = (query: string): Promise<MoviesResponse> =>
   moviesInstance.get('/search/movie', {
     params: {
       api_key: import.meta.env.VITE_MOVIES_API_TOKEN,
@@ -43,13 +55,13 @@ export const getMoviesSearchResults = (query: string) =>
     },
   });
 
-export const getMovieById = (movieId: string) => moviesInstance.get(`/movie/${movieId}`, {
+export const getMovieById = (movieId: string): Promise<MovieCard> => moviesInstance.get(`/movie/${movieId}`, {
     params: {
       api_key: import.meta.env.VITE_MOVIES_API_TOKEN,
     },
   })
 
-export const getMovieCast = (movieId: string) =>
+export const getMovieCast = (movieId: string): Promise<MovieCredits> =>
   moviesInstance.get(`/movie/${movieId}/credits`, {
     params: {
       api_key: import.meta.env.VITE_MOVIES_API_TOKEN,
@@ -58,7 +70,7 @@ export const getMovieCast = (movieId: string) =>
 
 export const getMovieRecommendations = (
   movieId: string,
-)=>
+): Promise<MoviesResponse> =>
   moviesInstance.get(`/movie/${movieId}/recommendations`, {
     params: {
       api_key: import.meta.env.VITE_MOVIES_API_TOKEN,
