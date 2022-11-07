@@ -1,7 +1,7 @@
 import React from 'react';
+import { RouterProvider } from 'react-router-dom';
+import history from './history';
 
-const App = () => (
-    <h1 className="text-3xl font-bold underline">Hello world!</h1>
-);
+const App = () => <RouterProvider router={history} />;
 
 export default App;
