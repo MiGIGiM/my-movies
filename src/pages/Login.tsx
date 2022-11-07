@@ -1,12 +1,14 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { FormEvent, useRef } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { Navigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { login, LoginVM } from '../services/http/auth.service';
 import authStorage from '../services/storage/auth.storage';
 
 const Login = () => {
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
+    const navigate = useNavigate();
 
     const { mutateAsync } = useMutation((data: LoginVM) => login(data));
 
@@ -19,10 +21,8 @@ const Login = () => {
 
         if (res && res.token) {
             authStorage.login(res.token);
-            return <Navigate to="/home" replace />;
+            navigate('/home');
         }
-
-        return null;
     };
     return (
         <main className="flex justify-center items-center w-screen h-screen">
@@ -30,10 +30,7 @@ const Login = () => {
                 <h1 className="text-4xl text-center md:text-5xl">
                     🎬 Movies DB
                 </h1>
-                <form
-                    onSubmit={() => onSubmit}
-                    className="flex flex-col space-y-5"
-                >
+                <form onSubmit={onSubmit} className="flex flex-col space-y-5">
                     <input
                         type="email"
                         placeholder="john@email.com"
