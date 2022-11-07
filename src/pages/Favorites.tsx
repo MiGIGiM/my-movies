@@ -14,10 +14,13 @@ import {
 import Card from '../components/MovieCard';
 import Loader from '../components/Loader';
 import authStorage from '../services/storage/auth.storage';
+import ls from '../services/storage/index';
 import NotFound from '../components/NotFound';
 
+const favoritesArray: MovieCard[] = JSON.parse(ls.get('favorites'));
+
 const Favorites = () => {
-  const [results, setResults] = useState<MovieCard[]>(JSON.parse(localStorage.getItem('favorites')));
+  const [results, setResults] = useState<MovieCard[]>(favoritesArray);
   const navigate = useNavigate();
 
   if (results.length === 0) {

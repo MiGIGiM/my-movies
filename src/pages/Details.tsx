@@ -28,8 +28,15 @@ const Details = () => {
 
   const fetchData = async () => {
     const res = await mutateAsync(movieId || '');
-    setMovieInfo(res);
-    setFavorite(res.favorite || false);
+    setMovieInfo({
+      id: res.id,
+      overview: res.overview,
+      release_date: res.release_date,
+      title: res.title,
+      vote_average: res.vote_average,
+      poster: `${import.meta.env.VITE_MOVIES_POSTER_URL}${res.poster_path}`,
+    });
+    setFavorite(localStorage.findInArray(res.id))
   };
 
   useEffect(() => {

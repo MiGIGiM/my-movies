@@ -11,7 +11,18 @@ const CastCarousel: FC<Props> = ({ movieId }) => {
 
   const fetchData = async () => {
     const res = await mutateAsync(movieId);
-    setResults(res);
+    console.log(res)
+    setResults(
+      res.cast.map((cast: any) => ({
+        id: cast.id,
+        name: cast.name,
+        character: cast.character,
+        image:
+          cast.profile_path !== null
+            ? `${import.meta.env.VITE_MOVIES_POSTER_URL}${cast.profile_path}`
+            : 'https://wallpapercave.com/wp/wp9566386.jpg',
+      })),
+    );
   };
 
   useEffect(() => {

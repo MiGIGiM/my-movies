@@ -14,7 +14,18 @@ const MovieCarousel: FC<Props> = ({ movieId }) => {
 
   const fetchData = async () => {
     const res = await mutateAsync(movieId);
-    setResults(res.results);
+    setResults(
+      res.results.map((result: any) => ({
+        id: result.id,
+        title: result.title,
+        release_date: new Date(result.release_date).toLocaleDateString(),
+        poster: `${import.meta.env.VITE_MOVIES_POSTER_URL}${
+          result.poster_path
+        }`,
+        overview: result.overview,
+        vote_average: result.vote_average,
+      })),
+    );
   };
 
   useEffect(() => {
