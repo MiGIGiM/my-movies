@@ -1,19 +1,21 @@
 import React, { FC, useEffect, useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { getMovieCast, MovieCastMember } from '../services/http/movies.service';
 import Card from './CastCard';
 
 type Props = { movieId: string };
 
 const CastCarousel: FC<Props> = ({ movieId }) => {
-  const { mutateAsync } = useMutation((id: string) => getMovieCast(id));
+  const { data, isLoading } = useQuery({
+    queryKey: [`${movieId}_cast`],
+    queryFn: () => getMovieCast(movieId),
+  });
   const [results, setResults] = useState<MovieCastMember[]>([]);
 
-  const fetchData = async () => {
-    const res = await mutateAsync(movieId);
-    console.log(res)
+  useEffect(() => {
+   if (data) {
     setResults(
-      res.cast.map((cast: any) => ({
+      data.cast.map((cast: any) => ({
         id: cast.id,
         name: cast.name,
         character: cast.character,
@@ -23,12 +25,7 @@ const CastCarousel: FC<Props> = ({ movieId }) => {
             : 'https://wallpapercave.com/wp/wp9566386.jpg',
       })),
     );
-  };
-
-  useEffect(() => {
-    fetchData()
-      .then(() => {})
-      .catch((err) => console.log(err));
+   }
   }, []);
 
   return (

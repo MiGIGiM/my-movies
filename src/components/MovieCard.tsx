@@ -2,10 +2,12 @@ import React, { FC } from 'react';
 import { HeartIcon } from '@heroicons/react/24/outline';
 import { useNavigate } from 'react-router-dom';
 import { MovieCard } from '../services/http/movies.service';
+import { QueryCache } from '@tanstack/react-query';
 
 type CardProps = { movie: MovieCard };
 
 const Card: FC<CardProps> = ({ movie }) => {
+  const queryCache = new QueryCache();
   const navigate = useNavigate();
   return (
     <div className="card w-80 bg-base-100 shadow-xl image-full">
@@ -28,7 +30,12 @@ const Card: FC<CardProps> = ({ movie }) => {
         <div className="card-actions">
           <button
             type="button"
-            onClick={() => navigate(`/details/${movie.id}`)}
+            onClick={() => {
+              navigate(`/details/${movie.id}`, {
+                replace: true,
+              });
+              queryCache.clear();
+          }}
             className="btn btn-accent"
           >
             View details

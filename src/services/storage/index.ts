@@ -33,7 +33,7 @@ export default {
     }
   },
   findInArray(valueId: string): boolean {
-    const arr: any[] = JSON.parse(this.get('favorites') || '');
+    const arr: any[] = JSON.parse(this.get('favorites') || '[]');
 
     const arrFiltered = arr.filter((element) => element.id === valueId)
 
