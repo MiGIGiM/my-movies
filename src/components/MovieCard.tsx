@@ -15,8 +15,9 @@ const Card: FC<CardProps> = ({ movie }) => {
       <div className="card-body">
         <span className="flex justify-between">
           <h2 className="card-title">{movie.title}</h2>
-          <button className="btn btn-ghost" type="button">
-            <HeartIcon className="h-6 w-6 text-neutral-content hover:text-accent-focus" />
+          <button className="btn btn-neutral" type="button">
+            {movie.vote_average ? `${movie.vote_average}` : 'N/A'}
+            <sub>/10</sub>
           </button>
         </span>
         <p>
@@ -25,7 +26,13 @@ const Card: FC<CardProps> = ({ movie }) => {
         </p>
         <p className="max text-clip">{movie.overview}</p>
         <div className="card-actions">
-          <button type="button" onClick={() => navigate(`/details/${movie.id}`)} className="btn btn-accent">View details</button>
+          <button
+            type="button"
+            onClick={() => navigate(`/details/${movie.id}`)}
+            className="btn btn-accent"
+          >
+            View details
+          </button>
         </div>
       </div>
     </div>

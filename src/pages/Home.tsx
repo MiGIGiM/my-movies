@@ -11,7 +11,7 @@ import {
   getPopularMovies,
   MovieCard,
 } from '../services/http/movies.service';
-import Card from '../components/Card';
+import Card from '../components/MovieCard';
 import Loader from '../components/Loader';
 import authStorage from '../services/storage/auth.storage';
 
