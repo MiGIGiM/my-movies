@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import createInstance, { ApiUrls } from './index';
+import localStorage from '../storage/index';
 
 const moviesInstance = createInstance(ApiUrls.MoviesApi);
 
@@ -10,6 +11,7 @@ export type MovieCard = {
   poster: string;
   overview: string;
   vote_average: number;
+  favorite?: boolean;
 };
 
 type MoviesResponse = {
@@ -83,6 +85,7 @@ export const getMovieById = async (movieId: string): Promise<MovieCard> => {
     poster: `${import.meta.env.VITE_MOVIES_POSTER_URL}${res.poster_path}`,
     overview: res.overview,
     vote_average: res.vote_average,
+    favorite: localStorage.findInArray(res.id.toString()),
   };
 };
 

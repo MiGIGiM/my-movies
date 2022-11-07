@@ -4,6 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { login, LoginVM } from '../services/http/auth.service';
 import authStorage from '../services/storage/auth.storage';
+import localStorage from '../services/storage/index';
 
 const Login = () => {
   const emailRef = useRef<HTMLInputElement>(null);
@@ -21,6 +22,9 @@ const Login = () => {
 
     if (res && res.token) {
       authStorage.login(res.token);
+
+      if (!localStorage.get('favorites')) localStorage.set('favorites', []);
+
       navigate('/home');
     }
   };

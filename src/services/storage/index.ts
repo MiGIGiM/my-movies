@@ -14,7 +14,29 @@ export default {
   clear() {
     localStorage.clear();
   },
-  setToArray(key: string, value: any[], search: (params: any) => boolean) {
-    /** TODO */
+  setToArray(value: any) {
+    if (this.get('favorites') === undefined) this.set('favorites', [value]);
+
+    if (this.get('favorites') !== undefined) {
+      let favArray: any[] = JSON.parse(this.get('favorites'));
+      const result = favArray.filter((item) => item.id === value.id);
+
+      if (result.length > 0) {
+        this.set(
+          'favorites',
+          favArray.filter((item) => item.id !== value.id),
+        );
+      } else {
+        favArray.push(value);
+        this.set('favorites', favArray);
+      }
+    }
+  },
+  findInArray(valueId: string): boolean {
+    const arr: any[] = JSON.parse(this.get('favorites'));
+
+    const arrFiltered = arr.filter((element) => element.id === valueId)
+
+    return arrFiltered.length > 0;
   },
 };

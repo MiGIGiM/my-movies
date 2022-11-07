@@ -2,16 +2,21 @@ import { useMutation } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { HeartIcon, ArrowUturnLeftIcon } from '@heroicons/react/24/outline';
+import { HeartIcon as SolidHeart } from '@heroicons/react/24/solid';
 import CastCarousel from '../components/CastList';
 import Loader from '../components/Loader';
 import MovieCarousel from '../components/MovieList';
 import { getMovieById, MovieCard } from '../services/http/movies.service';
 import NotFound from '../components/NotFound';
+import localStorage from '../services/storage/index';
 
 const Details = () => {
   const navigate = useNavigate();
   const { movieId } = useParams();
-  const { mutateAsync, isLoading, isError } = useMutation((id: string) => getMovieById(id));
+  const [favorite, setFavorite] = useState(false);
+  const { mutateAsync, isLoading, isError } = useMutation((id: string) =>
+    getMovieById(id),
+  );
   const [movieInfo, setMovieInfo] = useState<MovieCard>({
     id: 0,
     overview: '',
@@ -24,11 +29,14 @@ const Details = () => {
   const fetchData = async () => {
     const res = await mutateAsync(movieId || '');
     setMovieInfo(res);
+    setFavorite(res.favorite || false);
   };
 
   useEffect(() => {
     fetchData()
-      .then(() => {})
+      .then((data) => {
+        console.log(data);
+      })
       .catch((err) => console.log(err));
   }, []);
 
@@ -40,7 +48,9 @@ const Details = () => {
         <p className="text-center">
           We couldn&apos;t find what your looking for.
           {' '}
-          <a className="link link-hover link-secondary" href="/home">Return to home</a>
+          <a className="link link-hover link-secondary" href="/home">
+            Return to home
+          </a>
         </p>
       </>
     );
@@ -53,8 +63,16 @@ const Details = () => {
           <button
             type="button"
             className="absolute btn btn-ghost right-5  hover:text-accent-focus"
+            onClick={() => {
+              localStorage.setToArray(movieInfo);
+              setFavorite(!favorite);
+            }}
           >
-            <HeartIcon className="h-6 w-6 text-neutral-content" />
+            {favorite ? (
+              <SolidHeart className="h-6 w-6 text-neutral-content" />
+            ) : (
+              <HeartIcon className="h-6 w-6 text-neutral-content" />
+            )}
           </button>
           <button
             type="button"
